@@ -1,3 +1,8 @@
+function isStrongPassword(pwd) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(pwd);
+  }
+
+
 function login() {
     const user = document.getElementById("username").value;
     const pass = document.getElementById("password").value;
@@ -15,7 +20,4 @@ function login() {
         message.style.color = "salmon";
         message.textContent = "Invalid username or password";
     }
-  }
-function isStrongPassword(pwd) {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(pwd);
   }
