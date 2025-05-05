@@ -8,7 +8,7 @@ function login() {
       message.textContent = "Login successful! ";
       
       setTimeout(() => {
-        window.location.href = "Index2.html";
+        window.location.href = "index2.html";
       }, 1000); 
     }
     else{
