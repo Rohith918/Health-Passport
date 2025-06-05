@@ -1,30 +1,37 @@
-# 🩺 Health Passport React App
+# 🩺 Health Passport - Web Application
 
-A modern health tracking application built with React that allows users to record and review their cardiovascular, glucose, liver health, and prescription records. Data is stored in localStorage for persistent offline access.
+A lightweight and intuitive web application for managing personal health records. This project includes a dynamic dashboard for users to log and review their cardiovascular, glucose, liver metrics, and prescriptions.
+
+---
+
+## 🌐 Live Preview
+
+👉 [Click here to view the live app](https://health-passport.vercel.app/)
 
 ---
 
 ## 🚀 Features
 
-- 🧠 **Modular UI** using reusable components
-- 🩺 **Dynamic health forms** for Cardio, Glucose, Liver, and Prescriptions
-- 📁 **Prescription upload support** (PDF & Images)
-- 💾 **Persistent localStorage data**
-- 🔄 **Real-time summary updates** without page refresh
-- 🧹 **Delete individual records**
-- ✨ Beautiful UI with responsive layout
+### 🔐 Login Page (`index.html`)
+- Validates strong passwords (at least 8 characters with uppercase, lowercase, number, and special character).
+- still working on it to add backend services
+
+### 🏥 Health Passport Dashboard (`index2.html`)
+- **Cardio Info**: Log blood pressure, heart rate, cholesterol levels.
+- **Glucose Info**: Input fasting, postprandial glucose levels, and HbA1c.
+- **Liver Info**: Record ALT, AST, and bilirubin values.
+- **Prescription Upload**: Upload and view prescription files (PDF or image formats).
+- **About Modal**: Displays basic user information in a modal popup.
+- **Summary Tables**: View saved records in styled tables with delete functionality.
 
 ---
 
-## 🛠 Tech Stack
+## 📁 Project Structure
 
-- **React** (via Create React App)
-- **JavaScript (ES6+)**
-- **CSS3**
-- **HTML5**
-- No backend or database — uses `localStorage`
-
----
-
-## 🧩 Project Structure
-
+📦 Health Passport
+├── index.html # Login page
+├── index2.html # Dashboard with health data forms
+├── script.js # Login validation logic
+├── script2.js # Dialogs, form handling, localStorage logic
+├── style.css # Login page styling
+├── style1.css # Dashboard and modal styling
