@@ -1,0 +1,93 @@
+# Self-hosted Postgres, per your call to skip RDS for cost. Trade-offs
+# worth knowing:
+#  - Durability depends entirely on the EBS volume below (gp3, 10Gi).
+#    There is no automated backup here — see the CronJob in backup.yaml
+#    for a minimal pg_dump-to-S3 job; enable it once you have an S3
+#    bucket you're happy to pay a few cents/mo for.
+#  - Single replica: if the node dies, Postgres is down until the pod
+#    reschedules and reattaches the EBS volume (usually under a minute,
+#    but it is a real single point of failure).
+#  - The app already runs its own idempotent migration (server/db.ts
+#    migrate()) against this instance on boot, so no init container is
+#    needed to load schema.sql.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: health-passport
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_DB
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - name: pgdata
+              mountPath: /var/lib/postgresql/data
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "postgres"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-U", "postgres"]
+            initialDelaySeconds: 15
+            periodSeconds: 10
+  volumeClaimTemplates:
+    - metadata:
+        name: pgdata
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: gp3
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: health-passport
+spec:
+  clusterIP: None # headless — stable DNS name for the StatefulSet pod
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432

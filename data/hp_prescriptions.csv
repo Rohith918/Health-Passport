@@ -1,0 +1,4 @@
+id,user_id,filename,file_type,date,notes,file_data,created_at
+p-01,a-01,annual_checkup_rx.pdf,pdf,2026-06-01,"Routine multivitamin and Vitamin D3 supplement (2000 IU daily).",JVBERi0xLjQKJcTl8uXrp/Og0MTGCjEgMCBvYmoKPDwKL1R5cGUgL0NhdGFsb2cKL1BhZ2VzIDIgMCBS,2026-06-01 10:00:00+00
+p-02,a-02,atorvastatin_prescription.jpg,jpg,2026-06-15,"Atorvastatin 20mg once daily at bedtime for cholesterol management.",/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////,2026-06-15 10:00:00+00
+p-03,a-03,metformin_lisinopril.png,png,2026-07-20,"Lisinopril 10mg morning, Metformin 500mg twice daily with meals.",iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==,2026-07-20 10:00:00+00

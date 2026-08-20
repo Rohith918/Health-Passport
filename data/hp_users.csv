@@ -1,0 +1,4 @@
+id,email,first_name,last_name,password_hash,created_at
+a-01,sarah.connor@example.com,Sarah,Connor,$2a$06$eW1m7J1jV8K6E5Y1Jp0Wje9H3U8H4K6F7K1K8K6E5Y1Jp0Wje9H3U,2026-06-01 08:00:00+00
+a-02,john.doe@example.com,John,Doe,$2a$06$eW1m7J1jV8K6E5Y1Jp0Wje9H3U8H4K6F7K1K8K6E5Y1Jp0Wje9H3U,2026-06-15 08:00:00+00
+a-03,elena.rostova@example.com,Elena,Rostova,$2a$06$eW1m7J1jV8K6E5Y1Jp0Wje9H3U8H4K6F7K1K8K6E5Y1Jp0Wje9H3U,2026-07-20 08:00:00+00

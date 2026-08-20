@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    // --- Overrides for Node.js Backend ---
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "../dist/server",
+    "allowImportingTsExtensions": false, // Disable this for backend build
+    "noEmit": false, // Crucial: This allows the compiler to output JS files
+    "lib": ["ES2020"], // Server doesn't need DOM libraries
+    "isolatedModules": false,
+    "paths": {} // Clear frontend-specific paths
+  },
+  "include": ["."], // Compile all .ts files in the current (server) directory
+  "exclude": ["node_modules", "../dist"]
+}

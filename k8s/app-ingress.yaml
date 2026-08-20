@@ -1,0 +1,34 @@
+# Requires the AWS Load Balancer Controller to be installed in kube-system
+# (helm install, using the alb_controller_irsa role from terraform/eks.tf —
+# see the setup notes in the README this ships with).
+#
+# Cost note: an ALB runs ~$16-20/mo + data processing, same ballpark as a
+# classic/NLB LoadBalancer Service. If you don't need path/host-based
+# routing or WAF, swapping this Ingress for a plain `type: LoadBalancer`
+# Service costs about the same but is one less moving part.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: health-passport-ingress
+  namespace: health-passport
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: "<ACM_CERTIFICATE_ARN>"
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/healthcheck-path: /api/health
+    alb.ingress.kubernetes.io/healthcheck-port: "5000"
+spec:
+  rules:
+    - host: "<YOUR_DOMAIN>"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: health-passport-service
+                port:
+                  number: 80
